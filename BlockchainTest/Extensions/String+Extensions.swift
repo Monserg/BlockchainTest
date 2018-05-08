@@ -10,8 +10,8 @@ import Foundation
 
 extension String {
     /// Convert String -> Data([UInt8])
-    var hexData: Data {
-        return self.data(using: .utf8)!                     // non-nil
+    var data: Data {
+        return Data(utf8)
     }
 
     func convert(toDateFormat dateFormatType: DateFormatType) -> Date {

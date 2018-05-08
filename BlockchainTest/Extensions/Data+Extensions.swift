@@ -29,12 +29,19 @@ extension Data {
         return withUnsafeBytes { $0.pointee }
     }
         
-    /// Convert Data([UInt8]) -> String(Hex)
-    var hexString: String {
-        return self.map{ String(format: "%02hhx", $0) }.joined()
-    }
+//    /// Convert Data([UInt8]) -> String(Hex)
+//    var hexString: String {
+//        return self.map{ String(format: "%02hhx", $0) }.joined()
+//    }
     
+    /// Convert Data([UInt8]) -> String
     var string: String {
         return String(data: self, encoding: .utf8) ?? ""
     }
+    
+    /// Convert Data([UInt8]) -> String(Hex)
+    var hexlify: String {
+        return self.map{ String(format: "%02hhx", $0) }.joined()
+    }
+
 }

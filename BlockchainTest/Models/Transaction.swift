@@ -48,35 +48,29 @@ public struct Transaction {
      */
     public mutating func serialize(byOperationType operationType: OperationType) -> ErrorAPI? {
         /// Create `serializedBuffer` with `chainID`
-        var serializedBuffer = Data()
-//        var serializedBuffer: Data = "782a3039b478c839e4cb0c941ff4eaeb7df40bdd68bd441afd444b9da763de12".hexData
-//        Logger.log(message: "\nserializedBuffer + chainID:\n\t\(serializedBuffer.hexString)\n", event: .debug)
+        var serializedBuffer: Data = "782a3039b478c839e4cb0c941ff4eaeb7df40bdd68bd441afd444b9da763de12".data
+        Logger.log(message: "\nserializedBuffer + chainID:\n\t\(serializedBuffer.string)\n", event: .debug)
         
         // Add to buffer `ref_block_num` as `UInt16`
-//        let ref_block_num: UInt16 = 15769           // 36029, 15769
-
         let ref_block_num: UInt16 = self.ref_block_num
-        serializedBuffer += ref_block_num.data
-        Logger.log(message: "\nserializedBuffer + ref_block_num:\n\t\(serializedBuffer.hexString)\n", event: .debug)
+        serializedBuffer += ref_block_num.data.hexlify.data
+        Logger.log(message: "\nserializedBuffer + ref_block_num:\n\t\(serializedBuffer.string)\n", event: .debug)
 
         // Add to buffer `ref_block_prefix` as `UInt32`
-//        let ref_block_prefix: UInt32 = 2531029956   // 1164960351, 2531029956
-       
         let ref_block_prefix: UInt32 = self.ref_block_prefix
-        serializedBuffer += ref_block_prefix.data
-        Logger.log(message: "\nserializedBuffer + ref_block_prefix:\n\t\(serializedBuffer.hexString)\n", event: .debug)
+        serializedBuffer += ref_block_prefix.data.hexlify.data
+        Logger.log(message: "\nserializedBuffer + ref_block_prefix:\n\t\(serializedBuffer.string)\n", event: .debug)
 
         // Add to buffer `expiration` as `UInt32`
-//        let expirationDate: String = "2018-04-27T08:34:15".convert(toDateFormat: .expirationDateType).addingTimeInterval(60).convert(toStringFormat: .expirationDateType)
-        
-        let expirationDate: String = self.expiration.convert(toDateFormat: .expirationDateType).addingTimeInterval(60).convert(toStringFormat: .expirationDateType)
-        serializedBuffer += expirationDate.hexData
-        Logger.log(message: "\nserializedBuffer + expiration:\n\t\(serializedBuffer.hexString)\n", event: .debug)
+        let expirationDate: UInt32 = UInt32(self.expiration.convert(toDateFormat: .expirationDateType).timeIntervalSince1970)
+//        let expirationDate: UInt32 = UInt32(self.expiration.convert(toDateFormat: .expirationDateType).addingTimeInterval(60).timeIntervalSince1970)
+        serializedBuffer += expirationDate.data.hexlify.data
+        Logger.log(message: "\nserializedBuffer + expiration:\n\t\(serializedBuffer.string)\n", event: .debug)
 
         // Operations: add to buffer `the actual number of operations`
         let operations = self.operations
         serializedBuffer += self.varint(int: operations.count)
-        Logger.log(message: "\nserializedBuffer + operationsCount:\n\t\(serializedBuffer.hexString)\n", event: .debug)
+        Logger.log(message: "\nserializedBuffer + operationsCount:\n\t\(serializedBuffer.string)\n", event: .debug)
 
         // Operations
         for operation in operations {
@@ -84,7 +78,7 @@ public struct Transaction {
             if let operationArray = operation as? [Any], let operationTypeID = operationArray[1] as? Int {
                 // Operations: add to buffer `operation type ID`
                 serializedBuffer += self.varint(int: operationTypeID)
-                Logger.log(message: "\nserializedBuffer - operationTypeID:\n\t\(serializedBuffer.hexString)\n", event: .debug)
+                Logger.log(message: "\nserializedBuffer - operationTypeID:\n\t\(serializedBuffer.string)\n", event: .debug)
 
                 let keyNames = operationType.getFieldNames(byTypeID: operationTypeID)
  
@@ -95,15 +89,15 @@ public struct Transaction {
                         
                         if let fieldString = fieldValue as? String {
                             // Length + Type
-                            let fieldStringData = fieldString.hexData
-                            serializedBuffer += self.varint(int: fieldStringData.count) + fieldStringData
-                            Logger.log(message: "\nserializedBuffer - fieldString:\n\t\(serializedBuffer.hexString)\n", event: .debug)
+                            let fieldStringData = fieldString.data.hexlify.data
+                            serializedBuffer += self.varint(int: fieldString.data.count) + fieldStringData
+                            Logger.log(message: "\nserializedBuffer - fieldString:\n\t\(serializedBuffer.string)\n", event: .debug)
                         }
 
                         else if let fieldInt = fieldValue as? Int64 {
                             // Value
-                            serializedBuffer += UInt16(fieldInt).data
-                            Logger.log(message: "\nserializedBuffer - fieldInt:\n\t\(serializedBuffer.hexString)\n", event: .debug)
+                            serializedBuffer += UInt16(fieldInt).data.hexlify.data
+                            Logger.log(message: "\nserializedBuffer - fieldInt:\n\t\(serializedBuffer.string)\n", event: .debug)
                         }
                     }
                 }
@@ -113,18 +107,15 @@ public struct Transaction {
         // Extensions: add to buffer `the actual number of operations`
         let extensions = self.extensions
         serializedBuffer += self.varint(int: extensions.count)
-        Logger.log(message: "\nserializedBuffer + extensionsCount:\n\t\(serializedBuffer.hexString)\n", event: .debug)
+        Logger.log(message: "\nserializedBuffer + extensionsCount:\n\t\(serializedBuffer.string)\n", event: .debug)
 
         // Add SHA256
-//        let chainid = "782a3039b478c839e4cb0c941ff4eaeb7df40bdd68bd441afd444b9da763de12".data(using: String.Encoding.utf8)!
-//        let message = (chainid + serializedBuffer).sha256()
-        let message = serializedBuffer.sha256()
+        let message = serializedBuffer.sha256().hexlify.data
         Logger.log(message: "\nmessage = serializedBuffer.sha256:\n\t\(message.string)\n", event: .debug)
         
         // ECC signing
         let errorAPI = signingECC(messageSHA256: [UInt8](message))
 
-//        return nil
         return errorAPI
     }
     
@@ -216,9 +207,9 @@ public struct Transaction {
                 !((signature.data.62 & 0x80) > 0)
     }
     
-    private func hexlifyy(bytes: [UInt8]) -> String {
-        return bytes.map{ String(format: "%02hhx", $0) }.joined()
-    }
+//    private func hexlifyy(bytes: [UInt8]) -> String {
+//        return bytes.map{ String(format: "%02hhx", $0) }.joined()
+//    }
 
 }
 
@@ -253,7 +244,6 @@ extension Transaction {
         var data = Data()
         var n = int
         var hexString = String(format:"%02x", arguments: [n])
-        print("hexString = \(hexString)")
         
         while Int(hexString, radix: 16)! >= 0x80 {
             data += UInt8((n & 0x7f) | 0x80).data
@@ -263,6 +253,6 @@ extension Transaction {
         
         data += Int8(hexString, radix: 16)!.data
         
-        return data
+        return data.hexlify.data
     }
 }
