@@ -1,0 +1,9 @@
+{
+  "commitish" : "v0.5.2",
+  "iOS" : [
+    {
+      "name" : "SwiftBase58",
+      "hash" : "0fb94cb70eff4e803c2a1f86815bee55b04b84e1bac0585a5fbb531ae83b961d"
+    }
+  ]
+}

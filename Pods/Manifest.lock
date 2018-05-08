@@ -1,0 +1,28 @@
+PODS:
+  - CryptoSwift (0.9.0)
+  - Localize-Swift (2.0.0)
+  - Locksmith (4.0.0)
+  - secp256k1.swift (0.1.3)
+
+DEPENDENCIES:
+  - CryptoSwift
+  - Localize-Swift (~> 2.0)
+  - Locksmith
+  - secp256k1.swift
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - CryptoSwift
+    - Localize-Swift
+    - Locksmith
+    - secp256k1.swift
+
+SPEC CHECKSUMS:
+  CryptoSwift: bca8c5b653dcc2d9734409242a070ff53bafac86
+  Localize-Swift: c798ec9286494866f7068f85f7c71283ac5bdab4
+  Locksmith: e9bebbaaa4cee3c511bc358a44f843c3fe00e21f
+  secp256k1.swift: 3012a2bb09e183f43ac702125202c01c0bf55ea2
+
+PODFILE CHECKSUM: a51d46a58951fed7dc4538b785d20cb75d8ae170
+
+COCOAPODS: 1.5.0.beta.1
