@@ -20,3 +20,26 @@ extension Numeric {
         return self.sha256
     }
 }
+
+
+// FOR [Bytes]
+extension UInt16 {
+    var bytesReverse: [Byte] {
+        return [UInt8(truncatingIfNeeded: self), UInt8(truncatingIfNeeded: self >> 8)]
+    }
+
+    var bytesDirect: [Byte] {
+        return [UInt8(truncatingIfNeeded: self >> 8), UInt8(truncatingIfNeeded: self)]
+    }
+}
+
+
+extension UInt32 {
+    var bytesReverse: [Byte] {
+        return [UInt8(truncatingIfNeeded: self), UInt8(truncatingIfNeeded: self >> 8), UInt8(truncatingIfNeeded: self >> 16), UInt8(truncatingIfNeeded: self >> 24)]
+    }
+    
+    var bytesDirect: [Byte] {
+        return [UInt8(truncatingIfNeeded: self >> 24), UInt8(truncatingIfNeeded: self >> 16), UInt8(truncatingIfNeeded: self >> 8), UInt8(truncatingIfNeeded: self)]
+    }
+}

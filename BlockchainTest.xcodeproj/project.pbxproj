@@ -18,6 +18,7 @@
 		B144400B209CA65C00174AAA /* SwiftHex.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B1444009209CA65C00174AAA /* SwiftHex.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B172332D20907BB600AC11F7 /* ReadMe in Resources */ = {isa = PBXBuildFile; fileRef = B172332C20907BB600AC11F7 /* ReadMe */; };
 		B172333120908A7700AC11F7 /* ErrorAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B172333020908A7700AC11F7 /* ErrorAPI.swift */; };
+		B1AE17D420A4ACA7009020D7 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AE17D320A4ACA7009020D7 /* Array+Extensions.swift */; };
 		B1DF3913208C8B0F005E116A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DF3912208C8B0F005E116A /* AppDelegate.swift */; };
 		B1DF3915208C8B0F005E116A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DF3914208C8B0F005E116A /* ViewController.swift */; };
 		B1DF3918208C8B0F005E116A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1DF3916208C8B0F005E116A /* Main.storyboard */; };
@@ -57,6 +58,7 @@
 		B172332C20907BB600AC11F7 /* ReadMe */ = {isa = PBXFileReference; lastKnownFileType = text; path = ReadMe; sourceTree = "<group>"; };
 		B172333020908A7700AC11F7 /* ErrorAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorAPI.swift; sourceTree = "<group>"; };
 		B1943E78209373B900942406 /* BlockchainTest-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BlockchainTest-Bridging-Header.h"; sourceTree = "<group>"; };
+		B1AE17D320A4ACA7009020D7 /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		B1DF390F208C8B0F005E116A /* BlockchainTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlockchainTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1DF3912208C8B0F005E116A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B1DF3914208C8B0F005E116A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				B10D96C9209EC457002B8027 /* Date+Extensions.swift */,
 				B1F5D8D4209C2EF3004B8D56 /* Numeric+Extensions.swift */,
 				B1F5D8D6209C31BD004B8D56 /* String+Extensions.swift */,
+				B1AE17D320A4ACA7009020D7 /* Array+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -304,6 +307,7 @@
 				B172333120908A7700AC11F7 /* ErrorAPI.swift in Sources */,
 				B1DF3925208C94D2005E116A /* Logger.swift in Sources */,
 				B1DF3938208CB5AC005E116A /* Transaction.swift in Sources */,
+				B1AE17D420A4ACA7009020D7 /* Array+Extensions.swift in Sources */,
 				B1F5D8D3209C2E3B004B8D56 /* Data+Extensions.swift in Sources */,
 				B1DF3913208C8B0F005E116A /* AppDelegate.swift in Sources */,
 				B1DF3934208CAF87005E116A /* OperationType.swift in Sources */,
@@ -465,7 +469,10 @@
 					/usr/local/Cellar/openssl/1.0.2o_1/include,
 				);
 				INFOPLIST_FILE = BlockchainTest/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.golos.BlockchainTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/BlockchainTest/BlockchainTest-Bridging-Header.h";
@@ -491,7 +498,10 @@
 					/usr/local/include,
 				);
 				INFOPLIST_FILE = BlockchainTest/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.golos.BlockchainTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/BlockchainTest/BlockchainTest-Bridging-Header.h";

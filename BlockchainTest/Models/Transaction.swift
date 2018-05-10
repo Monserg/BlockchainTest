@@ -14,6 +14,7 @@ import CryptoSwift
 import SwiftBase58
 
 public typealias TransactionOperationType = [String: [String: Any]]
+public typealias Byte = UInt8
 
 public struct Transaction {
     // MARK: - Properties
@@ -47,6 +48,80 @@ public struct Transaction {
      
      */
     public mutating func serialize(byOperationType operationType: OperationType) -> ErrorAPI? {
+        /// Create `serializedBuffer` with `chainID`
+        var serializedBuffer: [Byte] = "782a3039b478c839e4cb0c941ff4eaeb7df40bdd68bd441afd444b9da763de12".hexBytes
+        Logger.log(message: "\nserializedBuffer + chainID:\n\t\(serializedBuffer.toHexString())\n", event: .debug)
+
+        // Add to buffer `ref_block_num` as `UInt16`
+        let ref_block_num: UInt16 = self.ref_block_num
+        serializedBuffer += ref_block_num.bytesReverse
+        Logger.log(message: "\nserializedBuffer + ref_block_num:\n\t\(serializedBuffer.toHexString())\n", event: .debug)
+
+        // Add to buffer `ref_block_prefix` as `UInt32`
+        let ref_block_prefix: UInt32 = self.ref_block_prefix
+        serializedBuffer += ref_block_prefix.bytesReverse
+        Logger.log(message: "\nserializedBuffer + ref_block_prefix:\n\t\(serializedBuffer.toHexString())\n", event: .debug)
+        
+        // Add to buffer `expiration` as `UInt32`
+        let expirationDate: UInt32 = UInt32(self.expiration.convert(toDateFormat: .expirationDateType).timeIntervalSince1970)
+//        let expirationDate: UInt32 = UInt32(self.expiration.convert(toDateFormat: .expirationDateType).addingTimeInterval(60).timeIntervalSince1970)
+        serializedBuffer += expirationDate.bytesReverse
+        Logger.log(message: "\nserializedBuffer + expiration:\n\t\(serializedBuffer.toHexString())\n", event: .debug)
+        
+        // Operations: add to buffer `the actual number of operations`
+        let operations = self.operations
+        serializedBuffer += self.varint(int: operations.count)
+        Logger.log(message: "\nserializedBuffer + operationsCount:\n\t\(serializedBuffer.toHexString())\n", event: .debug)
+        
+        // Operations
+        for operation in operations {
+            // Operation: add to buffer `operation type name`
+            if let operationArray = operation as? [Any], let operationTypeID = operationArray[1] as? Int {
+                // Operations: add to buffer `operation type ID`
+                serializedBuffer += self.varint(int: operationTypeID)
+                Logger.log(message: "\nserializedBuffer - operationTypeID:\n\t\(serializedBuffer.toHexString())\n", event: .debug)
+                
+                let keyNames = operationType.getFieldNames(byTypeID: operationTypeID)
+                
+                // Operations: add to buffer `operation fields`
+                if let fields = operationArray[2] as? [String: Any] {
+                    for keyName in keyNames {
+                        let fieldValue = fields[keyName]
+                        
+                        if let fieldString = fieldValue as? String {
+                            // Length + Type
+                            let fieldStringBytes = fieldString.bytes
+                            serializedBuffer += self.varint(int: fieldStringBytes.count) + fieldStringBytes
+                            Logger.log(message: "\nserializedBuffer - fieldString:\n\t\(serializedBuffer.toHexString())\n", event: .debug)
+                        }
+                            
+                        else if let fieldInt = fieldValue as? Int64 {
+                            // Value
+                            serializedBuffer += UInt16(fieldInt).bytesReverse
+                            Logger.log(message: "\nserializedBuffer - fieldInt:\n\t\(serializedBuffer.toHexString())\n", event: .debug)
+                        }
+                    }
+                }
+            }
+        }
+
+        // Extensions: add to buffer `the actual number of operations`
+        let extensions = self.extensions
+        serializedBuffer += self.varint(int: extensions.count)
+        Logger.log(message: "\nserializedBuffer + extensionsCount:\n\t\(serializedBuffer.toHexString())\n", event: .debug)
+        
+        // Add SHA256
+        let message = serializedBuffer.sha256()
+        Logger.log(message: "\nmessage = serializedBuffer.sha256:\n\t\(message.toHexString())\n", event: .debug)
+        
+        
+        return nil
+    }
+    
+    
+    
+    
+    public mutating func serializeOld(byOperationType operationType: OperationType) -> ErrorAPI? {
         /// Create `serializedBuffer` with `chainID`
         var serializedBuffer: Data = "782a3039b478c839e4cb0c941ff4eaeb7df40bdd68bd441afd444b9da763de12".data
         Logger.log(message: "\nserializedBuffer + chainID:\n\t\(serializedBuffer.string)\n", event: .debug)
@@ -111,15 +186,15 @@ public struct Transaction {
 
         // Add SHA256
         
-        let message = serializedBuffer.sha256()
-        Logger.log(message: "\nmessage = serializedBuffer.sha256:\n\t\(message.string)\n", event: .debug)
+//        let message = serializedBuffer.sha256().string
+//        Logger.log(message: "\nmessage = serializedBuffer.sha256:\n\t\(message)\n", event: .debug)
         
         
         // ECC signing
-        let errorAPI = signingECC(messageSHA256: [UInt8](message))
+//        let errorAPI = signingECC(messageSHA256: [UInt8](message))
 
-//        return nil
-        return errorAPI
+        return nil
+//        return errorAPI
     }
     
     
@@ -237,7 +312,33 @@ extension Transaction {
     }
     
     /// Convert Int -> Data([UInt8])
-    private func varint(int: Int) -> Data {
+    private func varint(int: Int) -> [Byte] {
+        var bytes = [Byte]()
+        var n = int
+        var hexString = String(format:"%02x", arguments: [n])
+        
+        while Int(hexString, radix: 16)! >= 0x80 {
+            bytes += UInt8((n & 0x7f) | 0x80).data
+            n = n >> 7
+            hexString = String(format:"%02x", arguments: [n])
+        }
+        
+        bytes += Int8(hexString, radix: 16)!.data
+        
+        return bytes
+    }
+
+//    def varint(n) :
+//    """ Varint encoding
+//    """
+//    data = b''
+//    while n >= 0x80 :
+//    data += bytes([(n & 0x7f) | 0x80])
+//    n >>= 7
+//    data += bytes([n])
+//    return data
+
+    private func varintOld(int: Int) -> Data {
         var data = Data()
         var n = int
         var hexString = String(format:"%02x", arguments: [n])
