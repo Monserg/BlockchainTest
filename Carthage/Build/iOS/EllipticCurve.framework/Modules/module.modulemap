@@ -1,0 +1,4 @@
+framework module EllipticCurve {
+    header "EllipticCurve-Swift.h"
+    requires objc
+}

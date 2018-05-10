@@ -1,0 +1,11 @@
+framework module UInt256 {
+  umbrella header "UInt256.h"
+
+  export *
+  module * { export * }
+}
+
+module UInt256.Swift {
+    header "UInt256-Swift.h"
+    requires objc
+}

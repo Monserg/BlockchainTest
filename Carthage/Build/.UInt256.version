@@ -1,0 +1,9 @@
+{
+  "commitish" : "0.2.2",
+  "iOS" : [
+    {
+      "name" : "UInt256",
+      "hash" : "31018572a49714362f8aec2efc7c888bb520543529a3ff0cfeb7075137dd77ca"
+    }
+  ]
+}

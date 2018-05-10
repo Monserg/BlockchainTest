@@ -1,0 +1,9 @@
+{
+  "commitish" : "0.3.2",
+  "iOS" : [
+    {
+      "name" : "EllipticCurve",
+      "hash" : "dbb594343f055534cdf8dfc0739140b395ddd32a23f2f19c632edf1f4f02c261"
+    }
+  ]
+}
