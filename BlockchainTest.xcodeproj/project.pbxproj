@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		067883F66DF444829ADED1D6 /* Pods_BlockchainTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A1A44CF9C7FE3F84046C051 /* Pods_BlockchainTest.framework */; };
 		B100997F20A0458E008102C7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100997E20A0458E008102C7 /* Constants.swift */; };
 		B10D96CA209EC457002B8027 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10D96C9209EC457002B8027 /* Date+Extensions.swift */; };
 		B1444003209CA64C00174AAA /* SwiftBase58.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1444002209CA64C00174AAA /* SwiftBase58.framework */; };
@@ -28,7 +29,6 @@
 		B1F5D8D3209C2E3B004B8D56 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F5D8D2209C2E3B004B8D56 /* Data+Extensions.swift */; };
 		B1F5D8D5209C2EF3004B8D56 /* Numeric+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F5D8D4209C2EF3004B8D56 /* Numeric+Extensions.swift */; };
 		B1F5D8D7209C31BD004B8D56 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F5D8D6209C31BD004B8D56 /* String+Extensions.swift */; };
-		EC71DDBD228CEA5734A207D5 /* Pods_BlockchainTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E152740AD45F12DD33F1A0D /* Pods_BlockchainTest.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -48,7 +48,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0E152740AD45F12DD33F1A0D /* Pods_BlockchainTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockchainTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A1A44CF9C7FE3F84046C051 /* Pods_BlockchainTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockchainTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B100997E20A0458E008102C7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B10D96C9209EC457002B8027 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		B1444002209CA64C00174AAA /* SwiftBase58.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftBase58.framework; path = Carthage/Build/iOS/SwiftBase58.framework; sourceTree = "<group>"; };
@@ -83,7 +83,7 @@
 				B144400A209CA65C00174AAA /* SwiftHex.framework in Frameworks */,
 				B1444003209CA64C00174AAA /* SwiftBase58.framework in Frameworks */,
 				B1444007209CA65600174AAA /* SwiftGMP.framework in Frameworks */,
-				EC71DDBD228CEA5734A207D5 /* Pods_BlockchainTest.framework in Frameworks */,
+				067883F66DF444829ADED1D6 /* Pods_BlockchainTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,7 +97,7 @@
 				B1444006209CA65600174AAA /* SwiftGMP.framework */,
 				B1444002209CA64C00174AAA /* SwiftBase58.framework */,
 				B1DF393D208DCE12005E116A /* Security.framework */,
-				0E152740AD45F12DD33F1A0D /* Pods_BlockchainTest.framework */,
+				3A1A44CF9C7FE3F84046C051 /* Pods_BlockchainTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -188,8 +188,8 @@
 				B1DF390B208C8B0F005E116A /* Sources */,
 				B1DF390C208C8B0F005E116A /* Frameworks */,
 				B1DF390D208C8B0F005E116A /* Resources */,
-				5BA858C401B6E7DA6B93AF06 /* [CP] Embed Pods Frameworks */,
 				B1444005209CA64C00174AAA /* Embed Frameworks */,
+				C16FEDDA3E65559A0B3C5274 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -266,7 +266,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5BA858C401B6E7DA6B93AF06 /* [CP] Embed Pods Frameworks */ = {
+		C16FEDDA3E65559A0B3C5274 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -457,11 +457,15 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = BlockchainTest/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
+				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"@executable_path/Frameworks",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/OpenSSL-Universal\"",
+					/usr/local/include,
+					/usr/local/Cellar/openssl/1.0.2o_1/include,
 				);
+				INFOPLIST_FILE = BlockchainTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.golos.BlockchainTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/BlockchainTest/BlockchainTest-Bridging-Header.h";
@@ -480,11 +484,14 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = BlockchainTest/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
+				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"@executable_path/Frameworks",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/OpenSSL-Universal\"",
+					/usr/local/include,
 				);
+				INFOPLIST_FILE = BlockchainTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.golos.BlockchainTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/BlockchainTest/BlockchainTest-Bridging-Header.h";

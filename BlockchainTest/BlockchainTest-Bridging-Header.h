@@ -13,3 +13,5 @@
 #endif /* BlockchainTest_Bridging_Header_h */
 
 #import <CommonCrypto/CommonDigest.h>
+//#import <CoreBitcoin/CoreBitcoin.h>
+//#import <CoreBitcoin/BTCKey.h>

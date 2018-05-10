@@ -1,3 +1,5 @@
 github "NeoTeo/SwiftBase58" "v0.5.2"
 github "NeoTeo/SwiftGMP" "v0.4.9"
 github "NeoTeo/SwiftHex" "v0.4.1"
+github "hyu2018/EllipticCurve" "0.3.2"
+github "mryu87/UInt256" "0.2.2"

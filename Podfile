@@ -3,17 +3,18 @@ platform :ios, '10.0'
 use_frameworks!
 
 target 'BlockchainTest' do
-    # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
 
+    pod 'Locksmith'
     pod 'CryptoSwift'
     pod 'secp256k1.swift'
-    pod 'Locksmith'
     pod 'Localize-Swift', '~> 2.0'
-    
-#    pod 'IDZSwiftCommonCrypto', '~> 0.9.1'
 
-#    pod 'Base58String', :git => "https://github.com/cloutiertyler/Base58String.git", :tag => "0.1.0"
+    # CoreBitcoin
+#    pod 'CoreBitcoin', :podspec => 'https://raw.github.com/oleganza/CoreBitcoin/master/CoreBitcoin.podspec'
 
-    # pod 'GolosBlockchain', :git => "https://github.com/Monserg/GolosBlockchain.git", :tag => "1.0.0"
+end
 
+pre_install do |installer|
+    # workaround for https://github.com/CocoaPods/CocoaPods/issues/3289
+    Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
 end

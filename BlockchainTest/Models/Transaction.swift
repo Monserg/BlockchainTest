@@ -110,12 +110,15 @@ public struct Transaction {
         Logger.log(message: "\nserializedBuffer + extensionsCount:\n\t\(serializedBuffer.string)\n", event: .debug)
 
         // Add SHA256
-        let message = serializedBuffer.sha256().hexlify.data
+        
+        let message = serializedBuffer.sha256()
         Logger.log(message: "\nmessage = serializedBuffer.sha256:\n\t\(message.string)\n", event: .debug)
+        
         
         // ECC signing
         let errorAPI = signingECC(messageSHA256: [UInt8](message))
 
+//        return nil
         return errorAPI
     }
     
@@ -130,7 +133,6 @@ public struct Transaction {
     private mutating func signingECC(messageSHA256: [UInt8]) -> ErrorAPI? {
         // ECC signing: create `wifs` for store posting keys
         let wifs = [postingKey]            // Tested value
-//        let wifs = ["5Jj6qFdJLGKFFFQbfTwv6JNQmXzCidnjgSFNYKhrgqhzigH4sFp"]
         
         
         // DELETE AFTER TEST
@@ -206,11 +208,6 @@ public struct Transaction {
                 !(signature.data.63 == 0)           &&
                 !((signature.data.62 & 0x80) > 0)
     }
-    
-//    private func hexlifyy(bytes: [UInt8]) -> String {
-//        return bytes.map{ String(format: "%02hhx", $0) }.joined()
-//    }
-
 }
 
 

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+//import secp256k1
 
 extension Data {
     var integer: Int {
@@ -43,5 +44,4 @@ extension Data {
     var hexlify: String {
         return self.map{ String(format: "%02hhx", $0) }.joined()
     }
-
 }
