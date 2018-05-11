@@ -97,8 +97,8 @@ class ViewController: UIViewController {
 
 // MARK: - Extensions
 extension Array {
-    static func createRandomElements(bySize size: Int) -> [UInt8] {
-        return (0..<size).map{ _ in UInt8(arc4random_uniform(UInt32(UInt8.max))) }
+    static func add(randomElementsCount count: Int) -> [Byte] {
+        return (0..<count).map{ _ in Byte(arc4random_uniform(UInt32(Byte.max))) }
     }
 }
 
