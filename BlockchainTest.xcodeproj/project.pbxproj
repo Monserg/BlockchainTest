@@ -27,7 +27,6 @@
 		B1DF3925208C94D2005E116A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DF3924208C94D2005E116A /* Logger.swift */; };
 		B1DF3934208CAF87005E116A /* OperationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DF3933208CAF87005E116A /* OperationType.swift */; };
 		B1DF3938208CB5AC005E116A /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DF3937208CB5AC005E116A /* Transaction.swift */; };
-		B1F5D8D3209C2E3B004B8D56 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F5D8D2209C2E3B004B8D56 /* Data+Extensions.swift */; };
 		B1F5D8D5209C2EF3004B8D56 /* Numeric+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F5D8D4209C2EF3004B8D56 /* Numeric+Extensions.swift */; };
 		B1F5D8D7209C31BD004B8D56 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F5D8D6209C31BD004B8D56 /* String+Extensions.swift */; };
 /* End PBXBuildFile section */
@@ -70,7 +69,6 @@
 		B1DF3933208CAF87005E116A /* OperationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationType.swift; sourceTree = "<group>"; };
 		B1DF3937208CB5AC005E116A /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		B1DF393D208DCE12005E116A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		B1F5D8D2209C2E3B004B8D56 /* Data+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
 		B1F5D8D4209C2EF3004B8D56 /* Numeric+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Numeric+Extensions.swift"; sourceTree = "<group>"; };
 		B1F5D8D6209C31BD004B8D56 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		B3D21F3CDBC19BF0BCC6033B /* Pods-BlockchainTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockchainTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlockchainTest/Pods-BlockchainTest.release.xcconfig"; sourceTree = "<group>"; };
@@ -170,12 +168,11 @@
 		B1F5D8D1209C2E29004B8D56 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				B1AE17D320A4ACA7009020D7 /* Array+Extensions.swift */,
 				B100997E20A0458E008102C7 /* Constants.swift */,
-				B1F5D8D2209C2E3B004B8D56 /* Data+Extensions.swift */,
 				B10D96C9209EC457002B8027 /* Date+Extensions.swift */,
 				B1F5D8D4209C2EF3004B8D56 /* Numeric+Extensions.swift */,
 				B1F5D8D6209C31BD004B8D56 /* String+Extensions.swift */,
-				B1AE17D320A4ACA7009020D7 /* Array+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -308,7 +305,6 @@
 				B1DF3925208C94D2005E116A /* Logger.swift in Sources */,
 				B1DF3938208CB5AC005E116A /* Transaction.swift in Sources */,
 				B1AE17D420A4ACA7009020D7 /* Array+Extensions.swift in Sources */,
-				B1F5D8D3209C2E3B004B8D56 /* Data+Extensions.swift in Sources */,
 				B1DF3913208C8B0F005E116A /* AppDelegate.swift in Sources */,
 				B1DF3934208CAF87005E116A /* OperationType.swift in Sources */,
 				B1F5D8D5209C2EF3004B8D56 /* Numeric+Extensions.swift in Sources */,

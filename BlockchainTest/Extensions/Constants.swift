@@ -19,6 +19,12 @@ import Foundation
 
 // Dynamic values
 let isAlex                              =   false
+
+//    ResponseAPIDynamicGlobalProperty(id: 0, time: "2018-04-30T12:45:21", head_block_id: "00f4a238fdbd2d454bf460929e7b3c48d75820e9", head_block_number: 16032312)
+let head_block_number: Int64            =   16032312
+let head_block_id: String               =   "00f4a238fdbd2d454bf460929e7b3c48d75820e9"
+let time: String                        =   "2018-04-30T12:45:21"
+
 let ref_block_num: UInt16               =   (isAlex) ? 51322 : 58100
 let ref_block_prefix: UInt32            =   (isAlex) ? 3809751608 : 4122522244
 let expiration: String                  =   (isAlex) ? "2018-04-26T08:21:37" : "2018-04-26T14:03:24"

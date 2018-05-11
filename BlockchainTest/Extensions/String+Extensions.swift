@@ -9,11 +9,6 @@
 import Foundation
 
 extension String {
-    /// Convert String -> Data([UInt8])
-    var data: Data {
-        return Data(utf8)
-    }
-
     func convert(toDateFormat dateFormatType: DateFormatType) -> Date {
         let dateFormatter           =   DateFormatter()
         dateFormatter.dateFormat    =   dateFormatType.rawValue
@@ -31,11 +26,7 @@ extension String {
         
         return UInt32(bigEndian: selectedBytesArrayData.withUnsafeBytes { $0.pointee })
     }
-}
 
-
-// FOR [Bytes]
-extension String {
     var hexBytes: [UInt8] {
         return stride(from: 0, to: count, by: 2).compactMap { UInt8(String(Array(self)[$0..<$0.advanced(by: 2)]), radix: 16) }
     }

@@ -9,20 +9,12 @@
 import UIKit
 
 class ViewController: UIViewController {
-    // MARK: - Properties
-    let head_block_number: Int64    =   16032312                                        // 36029 (Steem)
-    let head_block_id: String       =   "00f4a238fdbd2d454bf460929e7b3c48d75820e9"      // 20 bytes
-    let time: String                =   "2018-04-30T12:45:21"                           // "2016-08-08T12:24:17" (expirationDateType)
-
-//    ResponseAPIDynamicGlobalProperty(id: 0, time: "2018-04-30T12:45:21", head_block_id: "00f4a238fdbd2d454bf460929e7b3c48d75820e9", head_block_number: 16032312)
-
     // MARK: - Class Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         
         /// Create transaction
         let operationType = OperationType.vote(fields: (voter: voter, author: author, permlink: permlink, weight: weight))
-//        let operationType = OperationType.vote(fields: (voter: "msm72", author: "yuri-vlad-second", permlink: "sdgsdgsdg234234", weight: 10_000))
         let operation: [Any] = operationType.getFields()
 //        let refBlocks = self.getRefBlockValues()
 
@@ -33,16 +25,7 @@ class ViewController: UIViewController {
                                           operations:            [operation],
                                           extensions:            [],
                                           signatures:            [])
-
-
         
-//        var tx = Transaction(ref_block_num:         refBlocks.refBlockNum,
-//                             ref_block_prefix:      refBlocks.refBlockPrefix,
-//                             expiration:            time,
-//                             operations:            [operation],
-//                             extensions:            [],
-//                             signatures:            [])
-
         Logger.log(message: "\ntransaction:\n\t\(tx)\n", event: .debug)
 
         
@@ -83,7 +66,7 @@ class ViewController: UIViewController {
     */
     public func getRefBlockValues() -> (refBlockNum: UInt16, refBlockPrefix: UInt32) {
         /// Create `ref_block_num`: get last 2 bytes of `head_block_number`
-        let refBlockNum: UInt16 = UInt16(self.head_block_number & 0xFFFF)
+        let refBlockNum: UInt16 = UInt16(head_block_number & 0xFFFF)
         Logger.log(message: "\nref_block_num:\n\t\(refBlockNum)\n", event: .debug)
         
         /// Create `ref_block_prefix`: get 4 bytes (12...16) of `head_block_id`
@@ -93,12 +76,3 @@ class ViewController: UIViewController {
         return (refBlockNum, refBlockPrefix)
     }
 }
-
-
-// MARK: - Extensions
-extension Array {
-    static func add(randomElementsCount count: Int) -> [Byte] {
-        return (0..<count).map{ _ in Byte(arc4random_uniform(UInt32(Byte.max))) }
-    }
-}
-

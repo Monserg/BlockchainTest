@@ -15,14 +15,9 @@ extension Numeric {
         // For floating point types it will return 4 bytes for single-precision, 8 bytes for double-precision and 16 bytes for extended precision.
         return Data(bytes: &source, count: MemoryLayout<Self>.size)
     }
-    
-    var sha256: Data {
-        return self.sha256
-    }
 }
 
 
-// FOR [Bytes]
 extension UInt16 {
     var bytesReverse: [Byte] {
         return [UInt8(truncatingIfNeeded: self), UInt8(truncatingIfNeeded: self >> 8)]
