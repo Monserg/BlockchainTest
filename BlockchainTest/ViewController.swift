@@ -18,22 +18,25 @@ class ViewController: UIViewController {
         let operation: [Any] = operationType.getFields()
         let refBlocks = self.getRefBlockValues()
 
+        let expirationDate: String = time.convert(toDateFormat: .expirationDateType).addingTimeInterval(60).convert(toStringFormat: .expirationDateType)
+
+
         // TESTED VALUES
 //            {"ref_block_num":27682,"ref_block_prefix":683386140,"expiration":"2018-05-11T10:38:45","operations":[["vote",{"voter":"msm72","author":"yuri-vlad-second","permlink":"sdgsdgsdg234234","weight":10000}]],"extensions":[]}```
 
-        var tx: Transaction = Transaction(ref_block_num:         27682,
-                                          ref_block_prefix:      683386140,
-                                          expiration:            "2018-05-11T10:38:45",
-                                          operations:            [operation],
-                                          extensions:            [],
-                                          signatures:            [])
-        
-//        var tx: Transaction = Transaction(ref_block_num:         refBlocks.refBlockNum,
-//                                          ref_block_prefix:      refBlocks.refBlockPrefix,
-//                                          expiration:            time,
+//        var tx: Transaction = Transaction(ref_block_num:         27682,
+//                                          ref_block_prefix:      683386140,
+//                                          expiration:            "2018-05-11T10:38:45",
 //                                          operations:            [operation],
 //                                          extensions:            [],
 //                                          signatures:            [])
+        
+        var tx: Transaction = Transaction(ref_block_num:         refBlocks.refBlockNum,
+                                          ref_block_prefix:      refBlocks.refBlockPrefix,
+                                          expiration:            expirationDate,
+                                          operations:            [operation],
+                                          extensions:            [],
+                                          signatures:            [])
 
         Logger.log(message: "\ntransaction:\n\t\(tx)\n", event: .debug)
 

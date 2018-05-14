@@ -66,7 +66,6 @@ public struct Transaction {
         
         // Add to buffer `expiration` as `UInt32`
         let expirationDate: UInt32 = UInt32(self.expiration.convert(toDateFormat: .expirationDateType).timeIntervalSince1970)
-//        let expirationDate: UInt32 = UInt32(self.expiration.convert(toDateFormat: .expirationDateType).addingTimeInterval(60).timeIntervalSince1970)
         serializedBuffer += expirationDate.bytesReverse
         Logger.log(message: "\nserializedBuffer + expiration:\n\t\(serializedBuffer.toHexString())\n", event: .debug)
         
@@ -200,34 +199,34 @@ public struct Transaction {
         return nil
     }
     
-    /// Old func
+    /// Service function from Python
     private func isCanonical(signature: secp256k1_ecdsa_recoverable_signature) -> Bool {
         return  !((signature.data.31 & 0x80) > 0)   &&
-            !(signature.data.31 == 0)           &&
-            !((signature.data.30 & 0x80) > 0)   &&
-            !((signature.data.63 & 0x80) > 0)   &&
-            !(signature.data.63 == 0)           &&
-            !((signature.data.62 & 0x80) > 0)
+                !(signature.data.31 == 0)           &&
+                !((signature.data.30 & 0x80) > 0)   &&
+                !((signature.data.63 & 0x80) > 0)   &&
+                !(signature.data.63 == 0)           &&
+                !((signature.data.62 & 0x80) > 0)
     }
-
-    
-    /// Service function from Ruby: https://github.com/inertia186/radiator/blob/master/lib/radiator/transaction.rb#L233
-    private func isCanonical2(signature: secp256k1_ecdsa_recoverable_signature) -> Bool {
-        return  !(
-                    ((signature.data.0 & 0x80)  != 0)   ||  (signature.data.0 == 0)     ||
-                    ((signature.data.1 & 0x80)  != 0)   ||
-                    ((signature.data.32 & 0x80) != 0)   ||  (signature.data.32 == 0)    ||
-                    ((signature.data.33 & 0x80) != 0)
-                )
-    }
-    
-    /// Service function from C#: https://github.com/Chainers/Cryptography.ECDSA/blob/master/Sources/Cryptography.ECDSA/Secp256k1Manager.cs#L397
-    private func isCanonical1(signature: secp256k1_ecdsa_recoverable_signature) -> Bool {
-        return  !((signature.data.31 & 0x80) > 0)
-                && !(signature.data.31 == 0 && !((signature.data.30 & 0x80) > 0))
-                && !((signature.data.63 & 0x80) > 0)
-                && !(signature.data.63 == 0 && !((signature.data.62 & 0x80) > 0))
-    }
+//
+//
+//    /// Service function from Ruby: https://github.com/inertia186/radiator/blob/master/lib/radiator/transaction.rb#L233
+//    private func isCanonical2(signature: secp256k1_ecdsa_recoverable_signature) -> Bool {
+//        return  !(
+//                    ((signature.data.0 & 0x80)  != 0)   ||  (signature.data.0 == 0)     ||
+//                    ((signature.data.1 & 0x80)  != 0)   ||
+//                    ((signature.data.32 & 0x80) != 0)   ||  (signature.data.32 == 0)    ||
+//                    ((signature.data.33 & 0x80) != 0)
+//                )
+//    }
+//
+//    /// Service function from C#: https://github.com/Chainers/Cryptography.ECDSA/blob/master/Sources/Cryptography.ECDSA/Secp256k1Manager.cs#L397
+//    private func isCanonical1(signature: secp256k1_ecdsa_recoverable_signature) -> Bool {
+//        return  !((signature.data.31 & 0x80) > 0)
+//                && !(signature.data.31 == 0 && !((signature.data.30 & 0x80) > 0))
+//                && !((signature.data.63 & 0x80) > 0)
+//                && !(signature.data.63 == 0 && !((signature.data.62 & 0x80) > 0))
+//    }
 }
 
 
