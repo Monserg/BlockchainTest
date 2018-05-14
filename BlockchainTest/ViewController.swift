@@ -16,16 +16,25 @@ class ViewController: UIViewController {
         /// Create transaction
         let operationType = OperationType.vote(fields: (voter: voter, author: author, permlink: permlink, weight: weight))
         let operation: [Any] = operationType.getFields()
-//        let refBlocks = self.getRefBlockValues()
+        let refBlocks = self.getRefBlockValues()
 
         // TESTED VALUES
-        var tx: Transaction = Transaction(ref_block_num:         ref_block_num,
-                                          ref_block_prefix:      ref_block_prefix,
-                                          expiration:            expiration,
+//            {"ref_block_num":27682,"ref_block_prefix":683386140,"expiration":"2018-05-11T10:38:45","operations":[["vote",{"voter":"msm72","author":"yuri-vlad-second","permlink":"sdgsdgsdg234234","weight":10000}]],"extensions":[]}```
+
+        var tx: Transaction = Transaction(ref_block_num:         27682,
+                                          ref_block_prefix:      683386140,
+                                          expiration:            "2018-05-11T10:38:45",
                                           operations:            [operation],
                                           extensions:            [],
                                           signatures:            [])
         
+//        var tx: Transaction = Transaction(ref_block_num:         refBlocks.refBlockNum,
+//                                          ref_block_prefix:      refBlocks.refBlockPrefix,
+//                                          expiration:            time,
+//                                          operations:            [operation],
+//                                          extensions:            [],
+//                                          signatures:            [])
+
         Logger.log(message: "\ntransaction:\n\t\(tx)\n", event: .debug)
 
         
@@ -49,11 +58,9 @@ class ViewController: UIViewController {
         let tx_weight = ((tx.operations[0] as! [Any])[1] as! [String: Any])["weight"] as! Int64
         let tx_signatures = tx.signatures
 
-        
         let request = "{\"id\":\(id),\"method\":\"call\",\"jsonrpc\":\"2.0\",\"params\":[\"database_api\",\"verify_authority\",[{\"ref_block_num\":\(tx_ref_block_num),\"ref_block_prefix\":\(tx_ref_block_prefix),\"expiration\":\"\(tx_expiration)\",\"operations\":[[\"vote\",{\"voter\":\"\(tx_voter)\",\"author\":\"\(tx_author)\",\"permlink\":\"\(tx_permlink)\",\"weight\":\(tx_weight)}]],\"extensions\":[],\"signatures\":\(tx_signatures)}]]}"
         
         print(request)
-        
     }
 
     

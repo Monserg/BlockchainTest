@@ -27,7 +27,7 @@ extension String {
         return UInt32(bigEndian: selectedBytesArrayData.withUnsafeBytes { $0.pointee })
     }
 
-    var hexBytes: [UInt8] {
-        return stride(from: 0, to: count, by: 2).compactMap { UInt8(String(Array(self)[$0..<$0.advanced(by: 2)]), radix: 16) }
+    var hexBytes: [Byte] {
+        return stride(from: 0, to: count, by: 2).compactMap { Byte(String(Array(self)[$0..<$0.advanced(by: 2)]), radix: 16) }
     }
 }
