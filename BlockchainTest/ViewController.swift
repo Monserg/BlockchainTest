@@ -13,6 +13,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Broadcast
+        print(broadcast.test)
+        
+        self.testGetDynamicGlobalProperties()
+        
         /// Create transaction
         let operationType = OperationType.vote(fields: (voter: voter, author: author, permlink: permlink, weight: weight))
         let operation: [Any] = operationType.getFields()
@@ -85,4 +90,28 @@ class ViewController: UIViewController {
 
         return (refBlockNum, refBlockPrefix)
     }
+    
+    
+    private func testGetDynamicGlobalProperties() {
+        // API `get_dynamic_global_properties`
+        let requestAPIType = broadcast.prepareGET(requestByMethodType: .getDynamicGlobalProperties())
+        Logger.log(message: "\nrequestAPIType =\n\t\(requestAPIType!)", event: .debug)
+        
+        // Network Layer (WebSocketManager)
+//        DispatchQueue.main.async {
+//            webSocketManager.sendRequest(withType: requestAPIType!) { (responseAPIType) in
+//                Logger.log(message: "responseAPIType: \(responseAPIType)", event: .debug)
+//
+//                guard let responseAPI = responseAPIType.responseAPI, let responseAPIResult = responseAPI as? ResponseAPIDynamicGlobalPropertiesResult else {
+//                    Logger.log(message: responseAPIType.errorAPI!.caseInfo.message, event: .error)
+//                    return
+//                }
+//
+//                // Get globalProperties (page 5)
+//                let globalProperties = responseAPIResult.result
+//                Logger.log(message: "globalProperties:\n\t\(globalProperties)", event: .debug)
+//            }
+//        }
+    }
+
 }

@@ -21,6 +21,7 @@
 		B1D9006120AAE74100AECE51 /* MethodAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D9005E20AAE74000AECE51 /* MethodAPI.swift */; };
 		B1D9006220AAE74100AECE51 /* RequestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D9005F20AAE74000AECE51 /* RequestAPI.swift */; };
 		B1D9006320AAE74100AECE51 /* ResponseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D9006020AAE74000AECE51 /* ResponseAPI.swift */; };
+		B1D9006520AAE7DE00AECE51 /* Broadcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D9006420AAE7DE00AECE51 /* Broadcast.swift */; };
 		B1DF3913208C8B0F005E116A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DF3912208C8B0F005E116A /* AppDelegate.swift */; };
 		B1DF3915208C8B0F005E116A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DF3914208C8B0F005E116A /* ViewController.swift */; };
 		B1DF3918208C8B0F005E116A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1DF3916208C8B0F005E116A /* Main.storyboard */; };
@@ -62,6 +63,7 @@
 		B1D9005E20AAE74000AECE51 /* MethodAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MethodAPI.swift; sourceTree = "<group>"; };
 		B1D9005F20AAE74000AECE51 /* RequestAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestAPI.swift; sourceTree = "<group>"; };
 		B1D9006020AAE74000AECE51 /* ResponseAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseAPI.swift; sourceTree = "<group>"; };
+		B1D9006420AAE7DE00AECE51 /* Broadcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Broadcast.swift; sourceTree = "<group>"; };
 		B1DF390F208C8B0F005E116A /* BlockchainTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlockchainTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1DF3912208C8B0F005E116A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B1DF3914208C8B0F005E116A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 		B10D96CC209ED011002B8027 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				B1D9006420AAE7DE00AECE51 /* Broadcast.swift */,
 				B1DF3924208C94D2005E116A /* Logger.swift */,
 			);
 			path = Managers;
@@ -278,6 +281,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-BlockchainTest/Pods-BlockchainTest-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/BeyovaJSON/BeyovaJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Localize-Swift/Localize_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/Locksmith/Locksmith.framework",
@@ -285,6 +289,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BeyovaJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Localize_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locksmith.framework",
@@ -311,6 +316,7 @@
 				B1D9006220AAE74100AECE51 /* RequestAPI.swift in Sources */,
 				B1DF3925208C94D2005E116A /* Logger.swift in Sources */,
 				B1DF3938208CB5AC005E116A /* Transaction.swift in Sources */,
+				B1D9006520AAE7DE00AECE51 /* Broadcast.swift in Sources */,
 				B1AE17D420A4ACA7009020D7 /* Array+Extensions.swift in Sources */,
 				B1DF3913208C8B0F005E116A /* AppDelegate.swift in Sources */,
 				B1D9006120AAE74100AECE51 /* MethodAPI.swift in Sources */,
@@ -473,10 +479,7 @@
 					/usr/local/Cellar/openssl/1.0.2o_1/include,
 				);
 				INFOPLIST_FILE = BlockchainTest/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.golos.BlockchainTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/BlockchainTest/BlockchainTest-Bridging-Header.h";
@@ -502,10 +505,7 @@
 					/usr/local/include,
 				);
 				INFOPLIST_FILE = BlockchainTest/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.golos.BlockchainTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/BlockchainTest/BlockchainTest-Bridging-Header.h";

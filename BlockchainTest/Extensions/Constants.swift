@@ -24,3 +24,6 @@ let weight: Int64                       =   10_000
 // Keys wifs
 let postingKey: String                  =   "5Jj6qFdJLGKFFFQbfTwv6JNQmXzCidnjgSFNYKhrgqhzigH4sFp"
 let chainID                             =   "782a3039b478c839e4cb0c941ff4eaeb7df40bdd68bd441afd444b9da763de12"          // Golos.io
+
+// Singletons
+let broadcast: Broadcast                =   Broadcast.shared
