@@ -274,4 +274,37 @@ extension Transaction {
         
         return bytes
     }
+    
+    
+//    ///
+//    public static func decode(base58: String) -> [Byte] {
+//        var intData = 0
+//        
+//        for i in 0..<base58.count {
+//            var digit =
+//        }
+//    }
+//    
+//    public static byte[] Decode(string base58) {
+//    // Decode Base58 string to BigInteger
+//    BigInteger intData = 0;
+//    for (var i = 0; i < base58.Length; i++) {
+//    var digit = Digits.IndexOf(base58[i]); //Slow
+//    if (digit < 0)
+//    throw new FormatException($"Invalid Base58 character `{base58[i]}` at position {i}");
+//    intData = intData * 58 + digit;
+//    }
+//    
+//    // Encode BigInteger to byte[]
+//    // Leading zero bytes get encoded as leading `1` characters
+//    var leadingZeroCount = base58.TakeWhile(c => c == '1').Count();
+//    var leadingZeros = Enumerable.Repeat((byte)0, leadingZeroCount);
+//    var bytesWithoutLeadingZeros =
+//    intData.ToByteArray()
+//    .Reverse()// to big endian
+//    .SkipWhile(b => b == 0);//strip sign byte
+//    var result = leadingZeros.Concat(bytesWithoutLeadingZeros).ToArray();
+//    return result;
+//    }
+
 }
