@@ -11,7 +11,6 @@ import Foundation
 import secp256k1
 import Locksmith
 import CryptoSwift
-import SwiftBase58
 
 public typealias Byte = UInt8
 public typealias TransactionOperationType = [String: [String: Any]]
@@ -22,8 +21,18 @@ public struct Transaction {
     let ref_block_prefix: UInt32
     let expiration: String                              // '2016-08-09T10:06:15'
     var operations: [Any]
-    let extensions: [String?]
+    var extensions: [String]?
     var signatures: [String]
+    
+    // MARK: - Class Initialization
+    public init(withOperations operations: [Any], andExtensions extensions: [String]? = nil) {
+        self.ref_block_num          =   headBlockNumber
+        self.ref_block_prefix       =   headBlockID
+        self.expiration             =   time
+        self.operations             =   [operations]
+        self.extensions             =   extensions
+        self.signatures             =   [String]()
+    }
     
     
     // MARK: - Custom Functions
@@ -53,12 +62,12 @@ public struct Transaction {
         /// Create `serializedBuffer` with `chainID`
         var serializedBuffer: [Byte] = chainID.hexBytes
         Logger.log(message: "\nserializedBuffer + chainID:\n\t\(serializedBuffer.toHexString())\n", event: .debug)
-
+        
         // Add to buffer `ref_block_num` as `UInt16`
         let ref_block_num: UInt16 = self.ref_block_num
         serializedBuffer += ref_block_num.bytesReverse
         Logger.log(message: "\nserializedBuffer + ref_block_num:\n\t\(serializedBuffer.toHexString())\n", event: .debug)
-
+        
         // Add to buffer `ref_block_prefix` as `UInt32`
         let ref_block_prefix: UInt32 = self.ref_block_prefix
         serializedBuffer += ref_block_prefix.bytesReverse
@@ -82,7 +91,7 @@ public struct Transaction {
                 serializedBuffer += self.varint(int: operationTypeID)
                 Logger.log(message: "\nserializedBuffer - operationTypeID:\n\t\(serializedBuffer.toHexString())\n", event: .debug)
                 
-                let keyNames = operationType.getFieldNames(byTypeID: operationTypeID)
+                let keyNames = OperationType.getFieldNames(byTypeID: operationTypeID)
                 
                 // Operations: add to buffer `operation fields`
                 if let fields = operationArray[2] as? [String: Any] {
@@ -105,9 +114,9 @@ public struct Transaction {
                 }
             }
         }
-
+        
         // Extensions: add to buffer `the actual number of operations`
-        let extensions = self.extensions
+        let extensions = self.extensions ?? [String]()
         serializedBuffer += self.varint(int: extensions.count)
         Logger.log(message: "\nserializedBuffer + extensionsCount:\n\t\(serializedBuffer.toHexString())\n", event: .debug)
         
@@ -118,7 +127,7 @@ public struct Transaction {
         // ECC signing
         let errorAPI = signingECC(messageSHA256: messageSHA256)
         Logger.log(message: "\nerrorAPI:\n\t\(errorAPI?.localizedDescription ?? "nil")\n", event: .debug)
-
+        
         return errorAPI
     }
     
@@ -173,26 +182,26 @@ public struct Transaction {
                 index += 1
                 loopCounter = 0
             }
-
+            
             if (loopCounter > 0) {
                 extra = [Byte].add(randomElementsCount: 32)             // new bytes[32]
             }
-
+            
             loopCounter += 1
             isRecoverable = (secp256k1_ecdsa_sign_recoverable(ctx, &signature, messageSHA256, postingKey, nil, extra) as NSNumber).boolValue
             Logger.log(message: "\nsigningECC - extra:\n\t\(String(describing: extra?.toHexString()))\n", event: .debug)
             Logger.log(message: "\nsigningECC - sig.data:\n\t\(signature.data))\n", event: .debug)
         }
-
+        
         var output65: [Byte] = [Byte].init(repeating: 0, count: 65)     // add(randomElementsCount: 65)         // new bytes[65]
         secp256k1_ecdsa_recoverable_signature_serialize_compact(ctx, &output65[1], &recoveryID, &signature)
-
+        
         // 4 - compressed | 27 - compact
         Logger.log(message: "\nsigningECC - output65-1:\n\t\(output65.toHexString())\n", event: .debug)
         output65[0] = Byte(recoveryID + 4 + 27)                             // (byte)(recoveryId + 4 + 27)
         Logger.log(message: "\nsigningECC - output65-2:\n\t\(output65.toHexString())\n", event: .debug)
-
-        self.deleteOperationCode()
+        
+//        self.deleteOperationCode()
         self.add(signature: output65.toHexString())
         Logger.log(message: "\ntx - ready:\n\t\(self)\n", event: .debug)
         
@@ -208,25 +217,6 @@ public struct Transaction {
                 !(signature.data.63 == 0)           &&
                 !((signature.data.62 & 0x80) > 0)
     }
-//
-//
-//    /// Service function from Ruby: https://github.com/inertia186/radiator/blob/master/lib/radiator/transaction.rb#L233
-//    private func isCanonical2(signature: secp256k1_ecdsa_recoverable_signature) -> Bool {
-//        return  !(
-//                    ((signature.data.0 & 0x80)  != 0)   ||  (signature.data.0 == 0)     ||
-//                    ((signature.data.1 & 0x80)  != 0)   ||
-//                    ((signature.data.32 & 0x80) != 0)   ||  (signature.data.32 == 0)    ||
-//                    ((signature.data.33 & 0x80) != 0)
-//                )
-//    }
-//
-//    /// Service function from C#: https://github.com/Chainers/Cryptography.ECDSA/blob/master/Sources/Cryptography.ECDSA/Secp256k1Manager.cs#L397
-//    private func isCanonical1(signature: secp256k1_ecdsa_recoverable_signature) -> Bool {
-//        return  !((signature.data.31 & 0x80) > 0)
-//                && !(signature.data.31 == 0 && !((signature.data.30 & 0x80) > 0))
-//                && !((signature.data.63 & 0x80) > 0)
-//                && !(signature.data.63 == 0 && !((signature.data.62 & 0x80) > 0))
-//    }
 }
 
 
@@ -235,7 +225,8 @@ extension Transaction {
     /// Convert `Posting key` from String to [Byte]
     private func base58Decode(data: String) -> [Byte] {
         Logger.log(message: "\ntx - postingKeyString:\n\t\(data)\n", event: .debug)
-        let s: [Byte] = SwiftBase58.decode(data)
+        let s: [Byte] = Base58.bytesFromBase58(data)
+        //        let s: [Byte] = SwiftBase58.decode(data)
         let dec = cutLastBytes(source: s, cutCount: 4)
         
         Logger.log(message: "\ntx - postingKeyData:\n\t\(dec.toHexString())\n", event: .debug)
@@ -274,37 +265,4 @@ extension Transaction {
         
         return bytes
     }
-    
-    
-//    ///
-//    public static func decode(base58: String) -> [Byte] {
-//        var intData = 0
-//        
-//        for i in 0..<base58.count {
-//            var digit =
-//        }
-//    }
-//    
-//    public static byte[] Decode(string base58) {
-//    // Decode Base58 string to BigInteger
-//    BigInteger intData = 0;
-//    for (var i = 0; i < base58.Length; i++) {
-//    var digit = Digits.IndexOf(base58[i]); //Slow
-//    if (digit < 0)
-//    throw new FormatException($"Invalid Base58 character `{base58[i]}` at position {i}");
-//    intData = intData * 58 + digit;
-//    }
-//    
-//    // Encode BigInteger to byte[]
-//    // Leading zero bytes get encoded as leading `1` characters
-//    var leadingZeroCount = base58.TakeWhile(c => c == '1').Count();
-//    var leadingZeros = Enumerable.Repeat((byte)0, leadingZeroCount);
-//    var bytesWithoutLeadingZeros =
-//    intData.ToByteArray()
-//    .Reverse()// to big endian
-//    .SkipWhile(b => b == 0);//strip sign byte
-//    var result = leadingZeros.Concat(bytesWithoutLeadingZeros).ToArray();
-//    return result;
-//    }
-
 }

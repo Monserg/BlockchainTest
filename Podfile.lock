@@ -4,6 +4,7 @@ PODS:
   - Localize-Swift (2.0.0)
   - Locksmith (4.0.0)
   - secp256k1.swift (0.1.3)
+  - Starscream (3.0.5)
 
 DEPENDENCIES:
   - BeyovaJSON (~> 0.0)
@@ -11,14 +12,16 @@ DEPENDENCIES:
   - Localize-Swift (~> 2.0)
   - Locksmith
   - secp256k1.swift
+  - Starscream (~> 3.0)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - BeyovaJSON
     - CryptoSwift
     - Localize-Swift
     - Locksmith
     - secp256k1.swift
+    - Starscream
 
 SPEC CHECKSUMS:
   BeyovaJSON: 085c9fa886fa0b13e2964cc8c6965fab5bc7f90f
@@ -26,7 +29,8 @@ SPEC CHECKSUMS:
   Localize-Swift: c798ec9286494866f7068f85f7c71283ac5bdab4
   Locksmith: e9bebbaaa4cee3c511bc358a44f843c3fe00e21f
   secp256k1.swift: 3012a2bb09e183f43ac702125202c01c0bf55ea2
+  Starscream: faf918b2f2eff7d5dd21180646bf015a669673bd
 
-PODFILE CHECKSUM: 3b22586208ac2402bbf04d0e2a98d39349c6564a
+PODFILE CHECKSUM: 365b419830d0624d0c38e2ef98a89921b38106a9
 
-COCOAPODS: 1.5.0.beta.1
+COCOAPODS: 1.5.2

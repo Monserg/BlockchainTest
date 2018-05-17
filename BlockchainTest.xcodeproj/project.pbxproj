@@ -16,12 +16,14 @@
 		B1444008209CA65600174AAA /* SwiftGMP.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B1444006209CA65600174AAA /* SwiftGMP.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B144400A209CA65C00174AAA /* SwiftHex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1444009209CA65C00174AAA /* SwiftHex.framework */; };
 		B144400B209CA65C00174AAA /* SwiftHex.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B1444009209CA65C00174AAA /* SwiftHex.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B15FB43A20AC38E8000245CE /* WebSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15FB43920AC38E8000245CE /* WebSocketManager.swift */; };
 		B172333120908A7700AC11F7 /* ErrorAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B172333020908A7700AC11F7 /* ErrorAPI.swift */; };
 		B1AE17D420A4ACA7009020D7 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AE17D320A4ACA7009020D7 /* Array+Extensions.swift */; };
 		B1D9006120AAE74100AECE51 /* MethodAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D9005E20AAE74000AECE51 /* MethodAPI.swift */; };
 		B1D9006220AAE74100AECE51 /* RequestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D9005F20AAE74000AECE51 /* RequestAPI.swift */; };
 		B1D9006320AAE74100AECE51 /* ResponseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D9006020AAE74000AECE51 /* ResponseAPI.swift */; };
 		B1D9006520AAE7DE00AECE51 /* Broadcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D9006420AAE7DE00AECE51 /* Broadcast.swift */; };
+		B1D900C420ABFBD400AECE51 /* Base58.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D900C320ABFBD300AECE51 /* Base58.swift */; };
 		B1DF3913208C8B0F005E116A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DF3912208C8B0F005E116A /* AppDelegate.swift */; };
 		B1DF3915208C8B0F005E116A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DF3914208C8B0F005E116A /* ViewController.swift */; };
 		B1DF3918208C8B0F005E116A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1DF3916208C8B0F005E116A /* Main.storyboard */; };
@@ -57,6 +59,7 @@
 		B1444002209CA64C00174AAA /* SwiftBase58.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftBase58.framework; path = Carthage/Build/iOS/SwiftBase58.framework; sourceTree = "<group>"; };
 		B1444006209CA65600174AAA /* SwiftGMP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftGMP.framework; path = Carthage/Build/iOS/SwiftGMP.framework; sourceTree = "<group>"; };
 		B1444009209CA65C00174AAA /* SwiftHex.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftHex.framework; path = Carthage/Build/iOS/SwiftHex.framework; sourceTree = "<group>"; };
+		B15FB43920AC38E8000245CE /* WebSocketManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketManager.swift; sourceTree = "<group>"; };
 		B172333020908A7700AC11F7 /* ErrorAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorAPI.swift; sourceTree = "<group>"; };
 		B1943E78209373B900942406 /* BlockchainTest-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BlockchainTest-Bridging-Header.h"; sourceTree = "<group>"; };
 		B1AE17D320A4ACA7009020D7 /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
@@ -64,6 +67,7 @@
 		B1D9005F20AAE74000AECE51 /* RequestAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestAPI.swift; sourceTree = "<group>"; };
 		B1D9006020AAE74000AECE51 /* ResponseAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseAPI.swift; sourceTree = "<group>"; };
 		B1D9006420AAE7DE00AECE51 /* Broadcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Broadcast.swift; sourceTree = "<group>"; };
+		B1D900C320ABFBD300AECE51 /* Base58.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base58.swift; sourceTree = "<group>"; };
 		B1DF390F208C8B0F005E116A /* BlockchainTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlockchainTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1DF3912208C8B0F005E116A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B1DF3914208C8B0F005E116A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -133,8 +137,10 @@
 		B10D96CC209ED011002B8027 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				B1D900C320ABFBD300AECE51 /* Base58.swift */,
 				B1D9006420AAE7DE00AECE51 /* Broadcast.swift */,
 				B1DF3924208C94D2005E116A /* Logger.swift */,
+				B15FB43920AC38E8000245CE /* WebSocketManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -285,6 +291,7 @@
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Localize-Swift/Localize_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/Locksmith/Locksmith.framework",
+				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
 				"${BUILT_PRODUCTS_DIR}/secp256k1.swift/secp256k1.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -293,6 +300,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Localize_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locksmith.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/secp256k1.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -320,8 +328,10 @@
 				B1AE17D420A4ACA7009020D7 /* Array+Extensions.swift in Sources */,
 				B1DF3913208C8B0F005E116A /* AppDelegate.swift in Sources */,
 				B1D9006120AAE74100AECE51 /* MethodAPI.swift in Sources */,
+				B15FB43A20AC38E8000245CE /* WebSocketManager.swift in Sources */,
 				B1DF3934208CAF87005E116A /* OperationType.swift in Sources */,
 				B1F5D8D5209C2EF3004B8D56 /* Numeric+Extensions.swift in Sources */,
+				B1D900C420ABFBD400AECE51 /* Base58.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -479,7 +489,10 @@
 					/usr/local/Cellar/openssl/1.0.2o_1/include,
 				);
 				INFOPLIST_FILE = BlockchainTest/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.golos.BlockchainTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/BlockchainTest/BlockchainTest-Bridging-Header.h";
@@ -505,7 +518,10 @@
 					/usr/local/include,
 				);
 				INFOPLIST_FILE = BlockchainTest/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.golos.BlockchainTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/BlockchainTest/BlockchainTest-Bridging-Header.h";

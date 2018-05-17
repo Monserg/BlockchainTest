@@ -32,10 +32,15 @@ public enum MethodAPIType {
     /// Displays a limited number of publications sorted by an increased balance amount.
     case getDiscussionsByPromoted(limit: Int)
 
+
+    /// Save `vote` to blockchain
+    case verifyAuthorityVote
     
+
     /// This method return request parameters from selected enum case.
     func introduced() -> RequestParametersType {
         switch self {
+        // GET
         case .getAccounts(let names):                       return (methodAPIType:      self,
                                                                     paramsFirst:        ["database_api", "get_accounts"],
                                                                     paramsSecond:       [names])
@@ -60,6 +65,11 @@ public enum MethodAPIType {
                                                                     paramsFirst:        ["social_network", "get_discussions_by_promoted"],
                                                                     paramsSecond:       ["limit":limit])
 
+        // POST
+        case .verifyAuthorityVote:                          return (methodAPIType:      self,
+                                                                    paramsFirst:        ["database_api", "verify_authority"],
+                                                                    paramsSecond:       ["vote"])
+            
         }
     }
 }

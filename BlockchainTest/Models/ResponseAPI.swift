@@ -262,23 +262,23 @@ struct ResponseAPIUser: Decodable {
 
 
 /// Response: DynamicGlobalProperties Result
-struct ResponseAPIDynamicGlobalPropertiesResult: Decodable {
+public struct ResponseAPIDynamicGlobalPropertiesResult: Decodable {
     // MARK: - Properties
-    let id: Int64
-    let jsonrpc: String
-    let result: ResponseAPIDynamicGlobalProperty
+    public let id: Int64
+    public let jsonrpc: String
+    public let result: ResponseAPIDynamicGlobalProperty
 }
 
 
 /// Response: DynamicGlobalProperty
-struct ResponseAPIDynamicGlobalProperty: Decodable {
+public struct ResponseAPIDynamicGlobalProperty: Decodable {
     // MARK: - Properties
     // In work
     // swiftlint:disable identifier_name
-    let id: Int64
-    let time: String                            // "2018-04-20T19:01:12"
-    let head_block_id: String
-    let head_block_number: Int64
+    public let id: Int64
+    public let time: String                            // "2018-04-20T19:01:12"
+    public let head_block_id: String
+    public let head_block_number: Int64
 
     // In reserve
     /*
@@ -308,3 +308,18 @@ struct ResponseAPIDynamicGlobalProperty: Decodable {
     */
     // swiftlint:enable identifier_name
 }
+
+
+/// Response: VerifyAuthorityResult
+struct ResponseAPIVerifyAuthorityResult: Decodable {
+    // MARK: - Properties
+    // MARK: - Properties
+    let id: Int64
+    let jsonrpc: String
+    let result: Bool?
+    let error: ResponseAPIError?
+}
+//
+//
+//{“jsonrpc”:“2.0",“result”:true,“id”:1}
+//{“jsonrpc”:“2.0",“error”:{“code”:-32000,“message”:“missing required posting authority (3030000)\nMissing Posting Authority msm72\n\n\n”,“data”:{“code”:3030000,“name”:“tx_missing_posting_auth”,“message”:“missing required posting authority”,“stack”:[{“context”:{“level”:“err
