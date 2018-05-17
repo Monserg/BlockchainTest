@@ -80,7 +80,46 @@ public class Broadcast {
      - Returns: Return `RequestAPIType` tuple.
      
      */
-    public func preparePOST(requestByMethodType methodType: MethodAPIType, byTransaction transaction: Transaction) -> RequestAPIType? {
+    public func executePOST(byOperationType operationType: OperationType, completion: @escaping (ResponseAPIType?) -> Void) {
+        self.getDynamicGlobalProperties(completion: { success in
+            guard success else {
+                // ADD AlertView
+                completion(nil)
+                return
+            }
+
+            // Create Operation
+            let operation: [Any] = operationType.getFields()
+            Logger.log(message: "\noperation:\n\t\(operation)\n", event: .debug)
+
+            // Create Transaction
+            var tx: Transaction = Transaction(withOperations: operation)
+            Logger.log(message: "\ntransaction:\n\t\(tx)\n", event: .debug)
+            
+            // Transaction: serialize & SHA256 & ECC signing
+            let errorAPI = tx.serialize(byOperationType: operationType)
+            
+            guard errorAPI == nil else {
+                // Show alert error
+                Logger.log(message: "\(errorAPI!.localizedDescription)", event: .error)
+                return
+            }
+            
+            // Create POST message
+            if let requestAPIType = broadcast.preparePOST(requestByMethodType: .verifyAuthorityVote, byTransaction: tx) {
+                Logger.log(message: "\nrequestAPIType:\n\t\(requestAPIType.requestMessage)\n", event: .debug)
+                
+                // Send POST message to blockchain
+                webSocketManager.sendRequest(withType: requestAPIType, completion: { responseAPIType in
+                    completion(responseAPIType)
+                })
+            }
+        })
+    }
+    
+    
+    /// Prepare POST API request
+    private func preparePOST(requestByMethodType methodType: MethodAPIType, byTransaction transaction: Transaction) -> RequestAPIType? {
         Logger.log(message: "Success", event: .severe)
         
         let codeID                  =   generateUniqueId()
@@ -224,7 +263,7 @@ public class Broadcast {
     
     
     /// API `get_dynamic_global_properties`
-    public func getDynamicGlobalProperties(completion: @escaping (Bool) -> Void) {
+    private func getDynamicGlobalProperties(completion: @escaping (Bool) -> Void) {
         // API `get_dynamic_global_properties`
         let requestAPIType = self.prepareGET(requestByMethodType: .getDynamicGlobalProperties())
         Logger.log(message: "\nrequestAPIType =\n\t\(requestAPIType!)", event: .debug)
