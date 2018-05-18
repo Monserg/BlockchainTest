@@ -38,7 +38,7 @@ public class Broadcast {
      - Returns: Return `RequestAPIType` tuple.
      
      */
-    public func prepareGET(requestByMethodType methodType: MethodAPIType) -> RequestAPIType? {
+    private func prepareGET(requestByMethodType methodType: MethodAPIType) -> RequestAPIType? {
         Logger.log(message: "Success", event: .severe)
         
         let codeID                  =   generateUniqueId()
