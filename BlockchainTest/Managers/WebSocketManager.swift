@@ -53,7 +53,7 @@ public class WebSocketManager {
         let requestStore = (type: type, completion: completion)
         requestsAPIStore[type.id] = requestStore
         
-        webSocket.isConnected ? sendMessage(type.requestMessage) : webSocket.connect()
+        webSocket.isConnected ? sendMessage(type.requestMessage!) : webSocket.connect()
     }
     
     
@@ -85,7 +85,7 @@ extension WebSocketManager: WebSocketDelegate {
         Logger.log(message: "\nrequestsAPIStore =\n\t\(requestsAPIStore)", event: .debug)
         
         for (_, requestApiStore) in requestsAPIStore {
-            sendMessage(requestApiStore.type.requestMessage)
+            sendMessage(requestApiStore.type.requestMessage!)
         }
     }
     
@@ -124,9 +124,9 @@ extension WebSocketManager: WebSocketDelegate {
                     Logger.log(message: "\nwebSocket timeout =\n\t\(timeout) sec", event: .debug)
                     
                     if timeout >= webSocketTimeout {
-                        let newRequestAPIStore = (type: (id: requestAPIStore.type.id, requestMessage: requestAPIStore.type.requestMessage, startTime: Date(), methodAPIType: requestAPIStore.type.methodAPIType), completion: requestAPIStore.completion)
+                        let newRequestAPIStore = (type: (id: requestAPIStore.type.id, requestMessage: requestAPIStore.type.requestMessage, startTime: Date(), methodAPIType: requestAPIStore.type.methodAPIType, errorAPI: requestAPIStore.type.errorAPI), completion: requestAPIStore.completion)
                         self.requestsAPIStore[codeID] = newRequestAPIStore
-                        self.sendMessage(newRequestAPIStore.type.requestMessage)
+                        self.sendMessage(newRequestAPIStore.type.requestMessage!)
                     }
                         
                     // Check websocket timeout: handler completion

@@ -14,7 +14,7 @@ public typealias OperationVoteFields = (voter: String, author: String, permlink:
 public typealias OperationCommentFields = (author: String, permlink: String, maxAaccepted_payout: String, percent_steem_dollars: Int64, allow_votes: Bool, allow_curation_rewards: Bool, extensions: [String: Any])
 
 /// Operation types
-public enum OperationType {
+public enum OperationAPIType {
     /// In Work
     case vote(fields: OperationVoteFields)
     case comment(fields: OperationCommentFields)

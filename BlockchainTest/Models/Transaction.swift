@@ -58,7 +58,7 @@ public struct Transaction {
      - Returns: Error or nil.
      
      */
-    public mutating func serialize(byOperationType operationType: OperationType) -> ErrorAPI? {
+    public mutating func serialize(byOperationType operationType: OperationAPIType) -> ErrorAPI? {
         /// Create `serializedBuffer` with `chainID`
         var serializedBuffer: [Byte] = chainID.hexBytes
         Logger.log(message: "\nserializedBuffer + chainID:\n\t\(serializedBuffer.toHexString())\n", event: .debug)
@@ -91,7 +91,7 @@ public struct Transaction {
                 serializedBuffer += self.varint(int: operationTypeID)
                 Logger.log(message: "\nserializedBuffer - operationTypeID:\n\t\(serializedBuffer.toHexString())\n", event: .debug)
                 
-                let keyNames = OperationType.getFieldNames(byTypeID: operationTypeID)
+                let keyNames = OperationAPIType.getFieldNames(byTypeID: operationTypeID)
                 
                 // Operations: add to buffer `operation fields`
                 if let fields = operationArray[2] as? [String: Any] {
