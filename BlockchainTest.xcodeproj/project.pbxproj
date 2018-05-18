@@ -10,6 +10,7 @@
 		067883F66DF444829ADED1D6 /* Pods_BlockchainTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A1A44CF9C7FE3F84046C051 /* Pods_BlockchainTest.framework */; };
 		B100997F20A0458E008102C7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100997E20A0458E008102C7 /* Constants.swift */; };
 		B10D96CA209EC457002B8027 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10D96C9209EC457002B8027 /* Date+Extensions.swift */; };
+		B13F360520AEB00B003CA33D /* Broadcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13F360420AEB00B003CA33D /* Broadcast.swift */; };
 		B1444003209CA64C00174AAA /* SwiftBase58.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1444002209CA64C00174AAA /* SwiftBase58.framework */; };
 		B1444004209CA64C00174AAA /* SwiftBase58.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B1444002209CA64C00174AAA /* SwiftBase58.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B1444007209CA65600174AAA /* SwiftGMP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1444006209CA65600174AAA /* SwiftGMP.framework */; };
@@ -22,7 +23,6 @@
 		B1D9006120AAE74100AECE51 /* MethodAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D9005E20AAE74000AECE51 /* MethodAPI.swift */; };
 		B1D9006220AAE74100AECE51 /* RequestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D9005F20AAE74000AECE51 /* RequestAPI.swift */; };
 		B1D9006320AAE74100AECE51 /* ResponseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D9006020AAE74000AECE51 /* ResponseAPI.swift */; };
-		B1D9006520AAE7DE00AECE51 /* Broadcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D9006420AAE7DE00AECE51 /* Broadcast.swift */; };
 		B1D900C420ABFBD400AECE51 /* Base58.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D900C320ABFBD300AECE51 /* Base58.swift */; };
 		B1DF3913208C8B0F005E116A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DF3912208C8B0F005E116A /* AppDelegate.swift */; };
 		B1DF3915208C8B0F005E116A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DF3914208C8B0F005E116A /* ViewController.swift */; };
@@ -56,6 +56,7 @@
 		3A1A44CF9C7FE3F84046C051 /* Pods_BlockchainTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockchainTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B100997E20A0458E008102C7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B10D96C9209EC457002B8027 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
+		B13F360420AEB00B003CA33D /* Broadcast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Broadcast.swift; sourceTree = "<group>"; };
 		B1444002209CA64C00174AAA /* SwiftBase58.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftBase58.framework; path = Carthage/Build/iOS/SwiftBase58.framework; sourceTree = "<group>"; };
 		B1444006209CA65600174AAA /* SwiftGMP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftGMP.framework; path = Carthage/Build/iOS/SwiftGMP.framework; sourceTree = "<group>"; };
 		B1444009209CA65C00174AAA /* SwiftHex.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftHex.framework; path = Carthage/Build/iOS/SwiftHex.framework; sourceTree = "<group>"; };
@@ -66,7 +67,6 @@
 		B1D9005E20AAE74000AECE51 /* MethodAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MethodAPI.swift; sourceTree = "<group>"; };
 		B1D9005F20AAE74000AECE51 /* RequestAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestAPI.swift; sourceTree = "<group>"; };
 		B1D9006020AAE74000AECE51 /* ResponseAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseAPI.swift; sourceTree = "<group>"; };
-		B1D9006420AAE7DE00AECE51 /* Broadcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Broadcast.swift; sourceTree = "<group>"; };
 		B1D900C320ABFBD300AECE51 /* Base58.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base58.swift; sourceTree = "<group>"; };
 		B1DF390F208C8B0F005E116A /* BlockchainTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlockchainTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1DF3912208C8B0F005E116A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -137,8 +137,8 @@
 		B10D96CC209ED011002B8027 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				B13F360420AEB00B003CA33D /* Broadcast.swift */,
 				B1D900C320ABFBD300AECE51 /* Base58.swift */,
-				B1D9006420AAE7DE00AECE51 /* Broadcast.swift */,
 				B1DF3924208C94D2005E116A /* Logger.swift */,
 				B15FB43920AC38E8000245CE /* WebSocketManager.swift */,
 			);
@@ -322,9 +322,9 @@
 				B172333120908A7700AC11F7 /* ErrorAPI.swift in Sources */,
 				B1D9006320AAE74100AECE51 /* ResponseAPI.swift in Sources */,
 				B1D9006220AAE74100AECE51 /* RequestAPI.swift in Sources */,
+				B13F360520AEB00B003CA33D /* Broadcast.swift in Sources */,
 				B1DF3925208C94D2005E116A /* Logger.swift in Sources */,
 				B1DF3938208CB5AC005E116A /* Transaction.swift in Sources */,
-				B1D9006520AAE7DE00AECE51 /* Broadcast.swift in Sources */,
 				B1AE17D420A4ACA7009020D7 /* Array+Extensions.swift in Sources */,
 				B1DF3913208C8B0F005E116A /* AppDelegate.swift in Sources */,
 				B1D9006120AAE74100AECE51 /* MethodAPI.swift in Sources */,
