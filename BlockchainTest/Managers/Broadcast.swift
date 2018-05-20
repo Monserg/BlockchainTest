@@ -20,10 +20,17 @@ public typealias RequestAPIStore    =   (type: RequestAPIType, completion: (Resp
 public class Broadcast {
     // MARK: - Properties
     static let shared = Broadcast()
-    
+    let restAPIManager = RestAPI()
+    public var responseAPIType: ResponseAPIType?
+
     
     // MARK: - Class Initialization
-    private init() {}
+    private init() {
+        // GET requests
+        restAPIManager.didExecuteGETRequest.delegate(to: self, withCallback: { (object, responseAPIType) in
+            self.responseAPIType = responseAPIType
+        })
+    }
     
     deinit {
         Logger.log(message: "Success", event: .severe)
@@ -38,58 +45,70 @@ public class Broadcast {
      - Parameter completion: Blockchain response.
 
      */
-    public func executeGET(byMethodAPIType methodAPIType: MethodAPIType, completion: @escaping (ResponseAPIType?) -> Void) {
-        // Create GET message to blockchain
-        let requestAPIType = self.prepareGET(requestByMethodType: methodAPIType)
-        
-        guard let requestMessage = requestAPIType.requestMessage else {
-            completion((responseAPI: nil, errorAPI: ErrorAPI.requestFailed(message: "GET Request Failed")))
-            return
-        }
-        
-        Logger.log(message: "\nrequestAPIType:\n\t\(requestMessage)\n", event: .debug)
-            
-        // Send GET message to blockchain
-        webSocketManager.sendRequest(withType: requestAPIType, completion: { responseAPIType in
-            completion(responseAPIType)
-        })
+    public func executeGET(byMethodAPIType methodAPIType: MethodAPIType) {
+        restAPIManager.executeGETRequest(methodAPIType: methodAPIType)
     }
     
     
-    /// Prepare GET API request
-    private func prepareGET(requestByMethodType methodType: MethodAPIType) -> RequestAPIType {
-        Logger.log(message: "Success", event: .severe)
-        
-        let codeID                  =   generateUniqueId()
-        let requestParamsType       =   methodType.introduced()
-        
-        let requestAPI              =   RequestAPI(id:          codeID,
-                                                   method:      "call",
-                                                   jsonrpc:     "2.0",
-                                                   params:      requestParamsType.paramsFirst)
-        
-        let requestParams           =   requestParamsType.paramsSecond
-        
-        do {
-            // Encode data
-            let jsonEncoder         =   JSONEncoder()
-            var jsonData            =   try jsonEncoder.encode(requestParams)
-            let jsonParamsString    =   "[\(String(data: jsonData, encoding: .utf8)!)]"
-            
-            jsonData                =   try jsonEncoder.encode(requestAPI)
-            var jsonString          =   String(data: jsonData, encoding: .utf8)!.replacingOccurrences(of: "]}", with: ",\(jsonParamsString)]}")
-            jsonString              =   jsonString
-                                            .replacingOccurrences(of: "[[[", with: "[[")
-                                            .replacingOccurrences(of: "]]]", with: "]]")
-                                            .replacingOccurrences(of: "[\"nil\"]", with: "]")
-            Logger.log(message: "\nEncoded JSON -> String:\n\t " + jsonString, event: .debug)
-            
-            return (id: codeID, requestMessage: jsonString, startTime: Date(), methodAPIType: requestParamsType.methodAPIType, errorAPI: nil)
-        } catch {
-            Logger.log(message: "Error: \(error.localizedDescription)", event: .error)
-            return (id: codeID, requestMessage: nil, startTime: Date(), methodAPIType: requestParamsType.methodAPIType, errorAPI: ErrorAPI.requestFailed(message: "GET Request Failed"))
-        }
-    }
+//    /**
+//     Execute any of `GET` API methods.
+//
+//     - Parameter methodAPIType: Type of API method.
+//     - Parameter completion: Blockchain response.
+//
+//     */
+//    public func executeGET(byMethodAPIType methodAPIType: MethodAPIType, completion: @escaping (ResponseAPIType?) -> Void) {
+//        // Create GET message to blockchain
+//        let requestAPIType = self.prepareGET(requestByMethodType: methodAPIType)
+//
+//        guard let requestMessage = requestAPIType.requestMessage else {
+//            completion((responseAPI: nil, errorAPI: ErrorAPI.requestFailed(message: "GET Request Failed")))
+//            return
+//        }
+//
+//        Logger.log(message: "\nrequestAPIType:\n\t\(requestMessage)\n", event: .debug)
+//
+//        // Send GET message to blockchain
+//        webSocketManager.sendRequest(withType: requestAPIType, completion: { responseAPIType in
+//            completion(responseAPIType)
+//        })
+//    }
+    
+    
+//    /// Prepare GET API request
+//    private func prepareGET(requestByMethodType methodType: MethodAPIType) -> RequestAPIType {
+//        Logger.log(message: "Success", event: .severe)
+//
+//        let codeID                  =   generateUniqueId()
+//        let requestParamsType       =   methodType.introduced()
+//
+//        let requestAPI              =   RequestAPI(id:          codeID,
+//                                                   method:      "call",
+//                                                   jsonrpc:     "2.0",
+//                                                   params:      requestParamsType.paramsFirst)
+//
+//        let requestParams           =   requestParamsType.paramsSecond
+//
+//        do {
+//            // Encode data
+//            let jsonEncoder         =   JSONEncoder()
+//            var jsonData            =   try jsonEncoder.encode(requestParams)
+//            let jsonParamsString    =   "[\(String(data: jsonData, encoding: .utf8)!)]"
+//
+//            jsonData                =   try jsonEncoder.encode(requestAPI)
+//            var jsonString          =   String(data: jsonData, encoding: .utf8)!.replacingOccurrences(of: "]}", with: ",\(jsonParamsString)]}")
+//            jsonString              =   jsonString
+//                                            .replacingOccurrences(of: "[[[", with: "[[")
+//                                            .replacingOccurrences(of: "]]]", with: "]]")
+//                                            .replacingOccurrences(of: "[\"nil\"]", with: "]")
+//            Logger.log(message: "\nEncoded JSON -> String:\n\t " + jsonString, event: .debug)
+//
+//            return (id: codeID, requestMessage: jsonString, startTime: Date(), methodAPIType: requestParamsType.methodAPIType, errorAPI: nil)
+//        } catch {
+//            Logger.log(message: "Error: \(error.localizedDescription)", event: .error)
+//            return (id: codeID, requestMessage: nil, startTime: Date(), methodAPIType: requestParamsType.methodAPIType, errorAPI: ErrorAPI.requestFailed(message: "GET Request Failed"))
+//        }
+//    }
     
     
     /**
@@ -99,6 +118,7 @@ public class Broadcast {
      - Parameter completion: Blockchain response.
      
      */
+    /*
     public func executePOST(byOperationAPIType operationAPIType: OperationAPIType, completion: @escaping (ResponseAPIType?) -> Void) {
         // API `get_dynamic_global_properties`
         self.getDynamicGlobalProperties(completion: { success in
@@ -252,7 +272,7 @@ public class Broadcast {
             return (id: codeID, requestMessage: nil, startTime: Date(), methodAPIType: requestParamsType.methodAPIType, errorAPI: ErrorAPI.requestFailed(message: "Request Failed"))
         }
     }
-    
+    */
     
     /**
      Decode blockchain response.
@@ -286,47 +306,47 @@ public class Broadcast {
     }
 
     
-    /// API `get_dynamic_global_properties`
-    private func getDynamicGlobalProperties(completion: @escaping (Bool) -> Void) {
-        // API `get_dynamic_global_properties`
-        let requestAPIType = self.prepareGET(requestByMethodType: .getDynamicGlobalProperties())
-//        Logger.log(message: "\nrequestAPIType =\n\t\(requestAPIType!)", event: .debug)
-        
-        // Network Layer (WebSocketManager)
-        DispatchQueue.main.async {
-            webSocketManager.sendRequest(withType: requestAPIType) { (responseAPIType) in
-//                Logger.log(message: "\nresponseAPIType:\n\t\(responseAPIType)", event: .debug)
-                
-                guard   let responseAPI = responseAPIType.responseAPI,
-                    let responseAPIResult = responseAPI as? ResponseAPIDynamicGlobalPropertiesResult,
-                    let globalProperties = responseAPIResult.result else {
-//                    Logger.log(message: responseAPIType.errorAPI!.caseInfo.message, event: .error)
-                        completion(false)
-                        return
-                }
-                
-//                Logger.log(message: "\nglobalProperties:\n\t\(globalProperties)", event: .debug)
-                
-                time                =   globalProperties.time.convert(toDateFormat: .expirationDateType).addingTimeInterval(60).convert(toStringFormat: .expirationDateType)
-                headBlockID         =   globalProperties.head_block_id.convert(toIntFromStartByte: 12, toEndByte: 16)
-                headBlockNumber     =   UInt16(globalProperties.head_block_number & 0xFFFF)
-                
-                completion(true)
-            }
-        }
-    }
-
-
-    /// Generating a unique ID
-    private func generateUniqueId() -> Int {
-        var generatedID = 0
-        
-        repeat {
-            generatedID = Int(arc4random_uniform(1000))
-        } while requestIDs.contains(generatedID)
-        
-        requestIDs.append(generatedID)
-        
-        return generatedID
-    }
+//    /// API `get_dynamic_global_properties`
+//    private func getDynamicGlobalProperties(completion: @escaping (Bool) -> Void) {
+//        // API `get_dynamic_global_properties`
+//        let requestAPIType = self.prepareGET(requestByMethodType: .getDynamicGlobalProperties())
+////        Logger.log(message: "\nrequestAPIType =\n\t\(requestAPIType!)", event: .debug)
+//
+//        // Network Layer (WebSocketManager)
+//        DispatchQueue.main.async {
+//            webSocketManager.sendRequest(withType: requestAPIType) { (responseAPIType) in
+////                Logger.log(message: "\nresponseAPIType:\n\t\(responseAPIType)", event: .debug)
+//
+//                guard   let responseAPI = responseAPIType.responseAPI,
+//                    let responseAPIResult = responseAPI as? ResponseAPIDynamicGlobalPropertiesResult,
+//                    let globalProperties = responseAPIResult.result else {
+////                    Logger.log(message: responseAPIType.errorAPI!.caseInfo.message, event: .error)
+//                        completion(false)
+//                        return
+//                }
+//
+////                Logger.log(message: "\nglobalProperties:\n\t\(globalProperties)", event: .debug)
+//
+//                time                =   globalProperties.time.convert(toDateFormat: .expirationDateType).addingTimeInterval(60).convert(toStringFormat: .expirationDateType)
+//                headBlockID         =   globalProperties.head_block_id.convert(toIntFromStartByte: 12, toEndByte: 16)
+//                headBlockNumber     =   UInt16(globalProperties.head_block_number & 0xFFFF)
+//
+//                completion(true)
+//            }
+//        }
+//    }
+//
+//
+//    /// Generating a unique ID
+//    private func generateUniqueId() -> Int {
+//        var generatedID = 0
+//
+//        repeat {
+//            generatedID = Int(arc4random_uniform(1000))
+//        } while requestIDs.contains(generatedID)
+//
+//        requestIDs.append(generatedID)
+//
+//        return generatedID
+//    }
 }

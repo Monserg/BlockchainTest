@@ -24,19 +24,19 @@ extension ViewController {
     /// POST
     func testPOSTRequest() {
         // Create OperationType
-        let operationType: OperationAPIType = OperationAPIType.vote(fields: (voter: voter, author: author, permlink: permlink, weight: weight))
-        
-        broadcast.executePOST(byOperationAPIType: operationType, completion: { responseAPIType in
-            if let responseModel = responseAPIType?.responseAPI as? ResponseAPIVerifyAuthorityResult, let result = responseModel.result {
-                if responseModel.error == nil {
-                    Logger.log(message: "\nresponse Result = \(result)\n", event: .debug)
-                }
-            }
-                
-            else {
-                Logger.log(message: "nresponse ErrorAPI = \((responseAPIType!.responseAPI as! ResponseAPIVerifyAuthorityResult).error!.message)\n", event: .error)
-            }
-        })
+//        let operationType: OperationAPIType = OperationAPIType.vote(fields: (voter: voter, author: author, permlink: permlink, weight: weight))
+//
+//        broadcast.executePOST(byOperationAPIType: operationType, completion: { responseAPIType in
+//            if let responseModel = responseAPIType?.responseAPI as? ResponseAPIVerifyAuthorityResult, let result = responseModel.result {
+//                if responseModel.error == nil {
+//                    Logger.log(message: "\nresponse Result = \(result)\n", event: .debug)
+//                }
+//            }
+//
+//            else {
+//                Logger.log(message: "nresponse ErrorAPI = \((responseAPIType!.responseAPI as! ResponseAPIVerifyAuthorityResult).error!.message)\n", event: .error)
+//            }
+//        })
     }
     
     
@@ -46,16 +46,16 @@ extension ViewController {
         let methodAPIType = MethodAPIType.getAccounts(names: ["inertia"])
         
         // API 'get_accounts'
-        broadcast.executeGET(byMethodAPIType: methodAPIType, completion: { responseAPIType in
-            if let responseModel = responseAPIType?.responseAPI as? ResponseAPIUserResult, let result = responseModel.result {
-                if responseModel.error == nil {
-                    Logger.log(message: "\nresponse Result = \(result)\n", event: .debug)
-                }
+        broadcast.executeGET(byMethodAPIType: methodAPIType)
+        
+        if let responseModel = broadcast.responseAPIType?.responseAPI as? ResponseAPIUserResult, let result = responseModel.result {
+            if responseModel.error == nil {
+                Logger.log(message: "\nresponse Result = \(result)\n", event: .debug)
             }
-                
-            else {
-                Logger.log(message: "nresponse ErrorAPI = \((responseAPIType!.responseAPI as! ResponseAPIUserResult).error!.message)\n", event: .error)
-            }
-        })
+        }
+            
+        else {
+//            Logger.log(message: "nresponse ErrorAPI = \((broadcast.responseAPIType!.responseAPI as! ResponseAPIUserResult).error!.message)\n", event: .error)
+        }
     }
 }
