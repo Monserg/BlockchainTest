@@ -27,9 +27,9 @@ public class Broadcast {
     // MARK: - Class Initialization
     private init() {
         // GET requests
-        restAPIManager.didExecuteGETRequest.delegate(to: self, withCallback: { (object, responseAPIType) in
-            self.responseAPIType = responseAPIType
-        })
+//        restAPIManager.didExecuteGETRequest.delegate(to: self, withCallback: { (object, responseAPIType) in
+//            self.responseAPIType = responseAPIType
+//        })
     }
     
     deinit {
@@ -38,7 +38,7 @@ public class Broadcast {
     
     
     // MARK: - Class Functions
-    func completion<Object: AnyObject, Result>(of object: Object, onResult: @escaping (Object) -> (Result) -> (), onError: @escaping (Object) -> (Error) -> ()) -> ((Result?, Error?) -> Void) {
+    func completion<Object: AnyObject, Result>(of object: Object, onResult: @escaping (Object) -> (Result) -> Void, onError: @escaping (Object) -> (Error) -> Void) -> ((Result?, Error?) -> Void) {
         return { [weak object] result, error in
             guard let object = object else {
                 return
@@ -78,13 +78,14 @@ public class Broadcast {
      - Parameter completion: Blockchain response.
 
      */
-    public func executeGET(byMethodAPIType methodAPIType: MethodAPIType, completion: completion) {
+    public func executeGET(byMethodAPIType methodAPIType: MethodAPIType, onResult: @escaping (Decodable) -> Void, onError: @escaping (ErrorAPI) -> Void) {
 //    public func executeGET(byMethodAPIType methodAPIType: MethodAPIType, completion: @escaping (ResponseAPIType?) -> Void) {
         // Create GET message to blockchain
         let requestAPIType = self.prepareGET(requestByMethodType: methodAPIType)
 
         guard let requestMessage = requestAPIType.requestMessage else {
-            completion((responseAPI: nil, errorAPI: ErrorAPI.requestFailed(message: "GET Request Failed")))
+            onError(ErrorAPI.requestFailed(message: "GET Request Failed"))
+//            completion((responseAPI: nil, errorAPI: ErrorAPI.requestFailed(message: "GET Request Failed")))
             return
         }
 
@@ -92,7 +93,8 @@ public class Broadcast {
 
         // Send GET message to blockchain
         webSocketManager.sendRequest(withType: requestAPIType, completion: { responseAPIType in
-            completion(responseAPIType)
+            onResult(responseAPIType.responseAPI!)
+//            completion(responseAPIType)
         })
     }
     

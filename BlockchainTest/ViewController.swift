@@ -46,16 +46,24 @@ extension ViewController {
         let methodAPIType = MethodAPIType.getAccounts(names: ["inertia"])
         
         // API 'get_accounts'
-        broadcast.executeGET(byMethodAPIType: methodAPIType)
+        broadcast.executeGET(byMethodAPIType: methodAPIType,
+                             onResult: { [weak self] result in
+                                Logger.log(message: "\nresponse Result = \(result)\n", event: .debug)
+        },
+                             onError: { [weak self] errorAPI in
+                                Logger.log(message: "nresponse ErrorAPI = \(errorAPI.caseInfo.message)\n", event: .error)
+        })
         
-        if let responseModel = broadcast.responseAPIType?.responseAPI as? ResponseAPIUserResult, let result = responseModel.result {
-            if responseModel.error == nil {
-                Logger.log(message: "\nresponse Result = \(result)\n", event: .debug)
-            }
-        }
-            
-        else {
-//            Logger.log(message: "nresponse ErrorAPI = \((broadcast.responseAPIType!.responseAPI as! ResponseAPIUserResult).error!.message)\n", event: .error)
-        }
+//        broadcast.executeGET(byMethodAPIType: methodAPIType)
+//
+//        if let responseModel = broadcast.responseAPIType?.responseAPI as? ResponseAPIUserResult, let result = responseModel.result {
+//            if responseModel.error == nil {
+//                Logger.log(message: "\nresponse Result = \(result)\n", event: .debug)
+//            }
+//        }
+//
+//        else {
+////            Logger.log(message: "nresponse ErrorAPI = \((broadcast.responseAPIType!.responseAPI as! ResponseAPIUserResult).error!.message)\n", event: .error)
+//        }
     }
 }
