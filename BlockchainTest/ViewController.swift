@@ -14,8 +14,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         // TODO: - TEST CHAIN REQUESTS
-        self.testGETRequest()
-//        self.testPOSTRequest()
+//        self.testGETRequest()
+        self.testPOSTRequest()
     }
 }
 
@@ -24,8 +24,16 @@ extension ViewController {
     /// POST
     func testPOSTRequest() {
         // Create OperationType
-//        let operationType: OperationAPIType = OperationAPIType.vote(fields: (voter: voter, author: author, permlink: permlink, weight: weight))
-//
+        let operationType: OperationAPIType = OperationAPIType.vote(fields: (voter: voter, author: author, permlink: permlink, weight: weight))
+
+        broadcast.executePOST(byOperationAPIType: operationType,
+                              onResult: { [weak self] result in
+                                Logger.log(message: "\nresponse Result = \(result)\n", event: .debug)
+            },
+                              onError: { [weak self] errorAPI in
+                                Logger.log(message: "nresponse ErrorAPI = \(errorAPI.caseInfo.message)\n", event: .error)
+        })
+        
 //        broadcast.executePOST(byOperationAPIType: operationType, completion: { responseAPIType in
 //            if let responseModel = responseAPIType?.responseAPI as? ResponseAPIVerifyAuthorityResult, let result = responseModel.result {
 //                if responseModel.error == nil {
